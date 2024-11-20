@@ -58,11 +58,13 @@ public:
      */
     polynomial &operator=(const polynomial &other);
 
-    polynomial &operator+(const polynomial &other);
+    void &operator+(const polynomial &other);
 
-    polynomial &operator*(const polynomial &other);
+    void &operator+(int other);
 
-    polynomial &operator%(const polynomial &other);
+    void &operator*(const polynomial &other);
+
+    void &operator%(const polynomial &other);
 
 
     /**
@@ -113,6 +115,8 @@ public:
      *  A vector of pairs representing the canonical form of the polynomial
      */
     std::vector<std::pair<power, coeff>> canonical_form() const;
+private:
+    std::vector<int>& coefficients;
 };
 
 #endif
