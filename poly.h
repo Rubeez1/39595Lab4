@@ -16,6 +16,7 @@ public:
      * @brief Construct a new polynomial object that is the number 0 (ie. 0x^0)
      *
      */
+    ~polynomial();
     polynomial();
 
     /**
@@ -29,7 +30,18 @@ public:
      *  The end of the container to copy elements from
      */
     template <typename Iter>
-    polynomial(Iter begin, Iter end);
+    polynomial(Iter begin, Iter end) {
+        for (Iter it = begin; it != end; ++it) {
+            power p = it->first;  
+            coeff c = it->second; 
+
+            if (p >= coefficients->size()) {
+                coefficients->resize(p + 1);
+            }
+            
+            (*coefficients)[p] += c;
+        }
+    }
 
     /**
      * @brief Construct a new polynomial object from an existing polynomial object
@@ -92,7 +104,7 @@ public:
      * @return size_t
      *  The degree of the polynomial
      */
-    size_t find_degree_of();
+    size_t find_degree_of() const;
 
     /**
      * @brief Returns a vector that contains the polynomial is canonical form. This
@@ -116,7 +128,7 @@ public:
      */
     std::vector<std::pair<power, coeff>> canonical_form() const;
 
-    std::vector<int>& coefficients;
+    std::vector<int>* coefficients;
 private:
     
 };

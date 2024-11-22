@@ -6,68 +6,84 @@ polynomial::polynomial() {
     coefficients = new std::vector<int>;
 }
 
-template <typename Iter>
-polynomial::polynomial(Iter begin, Iter end)
-{
 
 
-polynomial &operator=(const polynomial &other) {
-    newvec = new std:vector<int>;
-    for (int i = 0; i < newvec.size(); i++) {
-        newvec.push_back(other->coefficients[i]);
-    }
-    newpoly = new Polynomial;
-    newpoly->coefficients = &newvec;
-    return newpoly;
+polynomial::~polynomial() {
+    delete coefficients; 
 }
 
-polynomial &operator+(const polynomial &other) {
-    newpoly = new polynomial();
-    newpoly.coefficients = new std::vector<int>;
-    if (coefficients.size() > other.coefficients.size()) {
-        for (int i = 0; i < coefficients.size(); i++) {
-            if ((i+1) < other.coefficients.size()) {
-                newpoly.push_back(other.coefficients[i] + coefficients[i]);
-            }
-            else {
-                newpoly.push_back(coefficients[i]);
-            }
-        }
-    }
-    else {
-        for (int i = 0; i < other.coefficients.size(); i++) {
-            if ((i+1) < coefficients.size()) {
-                newpoly.push_back(other.coefficients[i] + coefficients[i]);
-            }
-            else {
-                newpoly.push_back(other.coefficients[i]);
-            }
-        }        
-    }
-
+polynomial::polynomial(const polynomial &other) {
+    coefficients = new std::vector<int>(*other.coefficients);
 }
 
-polynomial &operator+(int other) {
-    newpoly = new polynomial();
-    newpoly.coefficients = new std:vector<int>;
-    for (int i = 0; i < coefficients.size(); i++) {
-        newpoly.coefficients[i] = coefficients[i];
-    }
-    newpoly.coefficients[0] = newpoly.coefficients[0] + other;
-    return newpoly;
+size_t polynomial::find_degree_of() const {
+    return coefficients->size();
 }
 
-polynomial &operator*(const polynomial &other) {
-    newpoly = new polynomial();
-    newpoly.coefficients = new std::vector<int>;
-    for (int i = 0; i < coefficients.size(); i++) {
-        for (int j = 0; i < other.coefficients.size(); i++) {
-            newpoly.coefficients[i + j] = coefficients[i] * other.coefficients[j]; 
-        }
-    }
-    return newpoly;
+void polynomial::print() const {
+    //dummy function
 }
 
-polynomial &operator%(const polynomial &other) {
+std::vector<std::pair<power, coeff>> polynomial::canonical_form() const {
+    std::vector<std::pair<power, coeff>> canonical;
+    for (size_t i = 0; i < coefficients->size(); i++) {
+        canonical.push_back(std::make_pair(i, (*coefficients)[i]));
+    }
+    return canonical;
+}
+
+polynomial& polynomial::operator=(const polynomial &other) {
+    coefficients = new std::vector<int>(*other.coefficients); 
+    return *this;
+}
+
+polynomial& polynomial::operator+(const polynomial &other) {
+    polynomial* newpoly = new polynomial();
+    newpoly->coefficients = new std::vector<int>(*coefficients);
     
+    for (size_t i = 0; i < other.coefficients->size(); i++) {
+        if (i < newpoly->coefficients->size()) {
+            (*newpoly->coefficients)[i] += (*other.coefficients)[i];
+        } else {
+            newpoly->coefficients->push_back((*other.coefficients)[i]);
+        }
+    }
+    return *newpoly;
+}
+
+polynomial& polynomial::operator+(int other) {
+    polynomial* newpoly = new polynomial();
+    newpoly->coefficients = new std::vector<int>(*coefficients);
+    (*newpoly->coefficients)[0] += other;
+    return *newpoly;
+}
+
+polynomial& polynomial::operator*(const polynomial &other) {
+    polynomial* newpoly = new polynomial();
+    newpoly->coefficients = new std::vector<int>;
+    for (size_t i = 0; i < coefficients->size(); i++) {
+        for (size_t j = 0; i < other.coefficients->size(); i++) {
+            (*newpoly->coefficients)[i + j] = (*coefficients)[i] * (*other.coefficients)[j]; 
+        }
+    }
+    return *newpoly; 
+}
+
+polynomial& polynomial::operator%(const polynomial& other) {
+    polynomial* remainder = new polynomial(*this);
+
+    while (remainder->find_degree_of() >= other.find_degree_of()) {
+        power p_diff = remainder->find_degree_of() - other.find_degree_of();
+        coeff c_quot = (*remainder->coefficients)[remainder->find_degree_of() - 1] / (*other.coefficients)[other.find_degree_of() - 1];
+
+        for (size_t i = 0; i < other.coefficients->size(); ++i) {
+            if (i + p_diff < remainder->coefficients->size()) {
+                (*remainder->coefficients)[i + p_diff] -= c_quot * (*other.coefficients)[i];
+            }
+        }
+        while (!remainder->coefficients->empty() && remainder->coefficients->back() == 0) {
+            remainder->coefficients->pop_back();
+        }
+    }
+    return *remainder;
 }
