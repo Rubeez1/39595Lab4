@@ -74,7 +74,13 @@ public:
 
     polynomial &operator+(int other);
 
+    friend polynomial operator+(int left, const polynomial &right);
+
     polynomial &operator*(const polynomial &other);
+
+    polynomial &operator*(int other);
+
+    friend polynomial operator*(int left, const polynomial &right);
 
     polynomial &operator%(const polynomial &other);
 

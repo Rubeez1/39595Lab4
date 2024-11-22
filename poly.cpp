@@ -58,6 +58,16 @@ polynomial& polynomial::operator+(int other) {
     return *newpoly;
 }
 
+polynomial operator+(int left, const polynomial &right) {
+    polynomial* newpoly = new polynomial();
+    newpoly->coefficients = new std::vector<int>;    
+    for (size_t i = 0; i < right.coefficients->size(); i++) {
+        (*newpoly->coefficients)[i] = (*right.coefficients)[i]; 
+    }
+    (*newpoly->coefficients)[0] = left + (*newpoly->coefficients)[0];
+    return *newpoly; 
+}
+
 polynomial& polynomial::operator*(const polynomial &other) {
     polynomial* newpoly = new polynomial();
     newpoly->coefficients = new std::vector<int>;
@@ -65,6 +75,24 @@ polynomial& polynomial::operator*(const polynomial &other) {
         for (size_t j = 0; i < other.coefficients->size(); i++) {
             (*newpoly->coefficients)[i + j] = (*coefficients)[i] * (*other.coefficients)[j]; 
         }
+    }
+    return *newpoly; 
+}
+
+polynomial& polynomial::operator*(int other) {
+    polynomial* newpoly = new polynomial();
+    newpoly->coefficients = new std::vector<int>;
+    for (size_t i = 0; i < coefficients->size(); i++) {
+        (*newpoly->coefficients)[i] = (*coefficients)[i] * other; 
+    }
+    return *newpoly; 
+}
+
+polynomial operator*(int left, const polynomial &right) {
+    polynomial* newpoly = new polynomial();
+    newpoly->coefficients = new std::vector<int>;    
+    for (size_t i = 0; i < right.coefficients->size(); i++) {
+        (*newpoly->coefficients)[i] = (*right.coefficients)[i] * left; 
     }
     return *newpoly; 
 }
