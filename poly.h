@@ -110,7 +110,7 @@ public:
      * @return size_t
      *  The degree of the polynomial
      */
-    size_t find_degree_of() const;
+    size_t find_degree_of();
 
     /**
      * @brief Returns a vector that contains the polynomial is canonical form. This
@@ -132,7 +132,7 @@ public:
      * @return std::vector<std::pair<power, coeff>>
      *  A vector of pairs representing the canonical form of the polynomial
      */
-    std::vector<std::pair<power, coeff>> canonical_form() const;
+    std::vector<std::pair<power, coeff>> canonical_form();
 
     std::vector<int>* coefficients;
 private:
