@@ -20,7 +20,7 @@ polynomial::polynomial(const polynomial &other) {
 }
 
 size_t polynomial::find_degree_of() const {
-    return coefficients->size();
+    return (coefficients->size() - 1);
 }
 
 void polynomial::print() {
