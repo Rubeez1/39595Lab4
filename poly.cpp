@@ -32,8 +32,17 @@ void polynomial::print() {
 
 std::vector<std::pair<power, coeff>> polynomial::canonical_form() const {
     std::vector<std::pair<power, coeff>> canonical;
+    bool zero_poly = false;
     for (int i = coefficients->size() - 1; i >= 0; i--) {
+        if ((*coefficients)[i] == 0) {
+            zero_poly = true;
+        }
+        else {
         canonical.push_back(std::make_pair(i, (*coefficients)[i]));
+        }
+    }
+    if ((zero_poly) && (canonical.size() == 0)) {
+        canonical.push_back(std::make_pair(0, 0));
     }
     return canonical;
 }
