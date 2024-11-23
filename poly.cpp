@@ -37,7 +37,7 @@ polynomial& polynomial::operator=(const polynomial &other) {
     return *this;
 }
 
-polynomial& polynomial::operator+(const polynomial &other) {
+polynomial& polynomial::operator+(const polynomial &other) const {
     polynomial* newpoly = new polynomial();
     newpoly->coefficients = new std::vector<int>(*coefficients);
     
@@ -68,7 +68,7 @@ polynomial operator+(int left, const polynomial &right) {
     return *newpoly; 
 }
 
-polynomial& polynomial::operator*(const polynomial &other) {
+polynomial& polynomial::operator*(const polynomial &other) const {
     polynomial* newpoly = new polynomial();
     newpoly->coefficients = new std::vector<int>;
     for (size_t i = 0; i < coefficients->size(); i++) {
