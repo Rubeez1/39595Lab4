@@ -121,17 +121,23 @@ polynomial& polynomial::operator%(const polynomial& other) const {
     polynomial* remainder = new polynomial(*this);
 
     while (remainder->find_degree_of() >= other.find_degree_of()) {
-        power p_diff = remainder->find_degree_of() - other.find_degree_of();
-        coeff c_quot = (*remainder->coefficients)[remainder->find_degree_of() - 1] / (*other.coefficients)[other.find_degree_of() - 1];
+        size_t p_diff = remainder->find_degree_of() - other.find_degree_of();
+        int c_quot = (*remainder->coefficients)[remainder->find_degree_of()] / (*other.coefficients)[other.find_degree_of()];
 
         for (size_t i = 0; i < other.coefficients->size(); ++i) {
             if (i + p_diff < remainder->coefficients->size()) {
                 (*remainder->coefficients)[i + p_diff] -= c_quot * (*other.coefficients)[i];
             }
         }
+
         while (!remainder->coefficients->empty() && remainder->coefficients->back() == 0) {
             remainder->coefficients->pop_back();
         }
+
+        if (remainder->coefficients->empty()) {
+            break; 
+        }
     }
+
     return *remainder;
 }
