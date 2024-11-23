@@ -16,7 +16,7 @@ polynomial::polynomial(const polynomial &other) {
     coefficients = new std::vector<int>(*other.coefficients);
 }
 
-size_t polynomial::find_degree_of() {
+size_t polynomial::find_degree_of() const {
     return coefficients->size();
 }
 
@@ -24,7 +24,7 @@ void polynomial::print() {
     //dummy function
 }
 
-std::vector<std::pair<power, coeff>> polynomial::canonical_form() {
+std::vector<std::pair<power, coeff>> polynomial::canonical_form() const {
     std::vector<std::pair<power, coeff>> canonical;
     for (size_t i = 0; i < coefficients->size(); i++) {
         canonical.push_back(std::make_pair(i, (*coefficients)[i]));
@@ -32,7 +32,7 @@ std::vector<std::pair<power, coeff>> polynomial::canonical_form() {
     return canonical;
 }
 
-polynomial& polynomial::operator=(const polynomial &other) const {
+polynomial& polynomial::operator=(const polynomial &other){
     coefficients = new std::vector<int>(*other.coefficients); 
     return *this;
 }
@@ -88,7 +88,7 @@ polynomial& polynomial::operator*(int other) const {
     return *newpoly; 
 }
 
-polynomial operator*(int left, const polynomial &right) const {
+polynomial operator*(int left, const polynomial &right){
     polynomial* newpoly = new polynomial();
     newpoly->coefficients = new std::vector<int>;    
     for (size_t i = 0; i < right.coefficients->size(); i++) {
