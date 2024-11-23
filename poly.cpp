@@ -2,7 +2,7 @@
 #include <vector>
 
 
-polynomial::polynomial() const {
+polynomial::polynomial() {
     coefficients = new std::vector<int>;
 }
 
@@ -12,11 +12,11 @@ polynomial::~polynomial() {
     delete coefficients; 
 }
 
-polynomial::polynomial(const polynomial &other) const {
+polynomial::polynomial(const polynomial &other) {
     coefficients = new std::vector<int>(*other.coefficients);
 }
 
-size_t polynomial::find_degree_of() const {
+size_t polynomial::find_degree_of() {
     return coefficients->size();
 }
 
@@ -24,7 +24,7 @@ void polynomial::print() {
     //dummy function
 }
 
-std::vector<std::pair<power, coeff>> polynomial::canonical_form() const {
+std::vector<std::pair<power, coeff>> polynomial::canonical_form() {
     std::vector<std::pair<power, coeff>> canonical;
     for (size_t i = 0; i < coefficients->size(); i++) {
         canonical.push_back(std::make_pair(i, (*coefficients)[i]));

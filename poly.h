@@ -57,7 +57,7 @@ public:
      * Only used for debugging, isn't graded.
      *
      */
-    void print() const;
+    void print();
 
     /**
      * @brief Turn the current polynomial instance into a deep copy of another
