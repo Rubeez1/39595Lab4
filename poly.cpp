@@ -1,5 +1,8 @@
-#include "poly.h"
 #include <vector>
+#include <iostream>
+#include <chrono>
+#include <optional>
+#include "poly.h"
 
 
 polynomial::polynomial() {
@@ -21,12 +24,15 @@ size_t polynomial::find_degree_of() const {
 }
 
 void polynomial::print() {
-    //dummy function
+    for (int i = coefficients->size(); i < 0 ; i--) {
+       std::cout << (*coefficients)[i] << "x^" << i << std::endl;
+    }
+    
 }
 
 std::vector<std::pair<power, coeff>> polynomial::canonical_form() const {
     std::vector<std::pair<power, coeff>> canonical;
-    for (size_t i = 0; i < coefficients->size(); i++) {
+    for (int i = coefficients->size() - 1; i >= 0; i--) {
         canonical.push_back(std::make_pair(i, (*coefficients)[i]));
     }
     return canonical;
@@ -70,17 +76,18 @@ polynomial operator+(int left, const polynomial &right) {
 
 polynomial& polynomial::operator*(const polynomial &other) const {
     polynomial* newpoly = new polynomial();
-    newpoly->coefficients = new std::vector<int>;
+
     size_t max_power1 = coefficients->size();
     size_t max_power2 = other.coefficients->size();
-    (*newpoly->coefficients).resize(std::max(max_power1,max_power2),0);
+    newpoly->coefficients->resize(max_power1 + max_power2 - 1, 0);  
 
-    for (size_t i = 0; i < coefficients->size(); i++) {
-        for (size_t j = 0; i < other.coefficients->size(); i++) {
-            (*newpoly->coefficients)[i + j] = (*coefficients)[i] * (*other.coefficients)[j]; 
+    for (size_t i = 0; i < max_power1; i++) {
+        for (size_t j = 0; j < max_power2; j++) {
+            (*newpoly->coefficients)[i + j] += (*coefficients)[i] * (*other.coefficients)[j];  // Add the product
         }
     }
-    return *newpoly; 
+
+    return *newpoly;
 }
 
 polynomial& polynomial::operator*(int other) const {
