@@ -31,15 +31,16 @@ public:
      */
     template <typename Iter>
     polynomial(Iter begin, Iter end) {
+        coefficients = new std::vector<int>();
         for (Iter it = begin; it != end; ++it) {
             power p = it->first;  
             coeff c = it->second; 
 
             if (p >= coefficients->size()) {
-                coefficients->resize(p + 1);
+                coefficients->resize(p + 1,0);
             }
             
-            (*coefficients)[p] += c;
+            (*coefficients)[p] = (*coefficients)[p] + c;
         }
     }
 

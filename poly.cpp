@@ -71,6 +71,10 @@ polynomial operator+(int left, const polynomial &right) {
 polynomial& polynomial::operator*(const polynomial &other) const {
     polynomial* newpoly = new polynomial();
     newpoly->coefficients = new std::vector<int>;
+    size_t max_power1 = coefficients->size();
+    size_t max_power2 = other.coefficients->size();
+    (*newpoly->coefficients).resize(std::max(max_power1,max_power2),0);
+
     for (size_t i = 0; i < coefficients->size(); i++) {
         for (size_t j = 0; i < other.coefficients->size(); i++) {
             (*newpoly->coefficients)[i + j] = (*coefficients)[i] * (*other.coefficients)[j]; 
