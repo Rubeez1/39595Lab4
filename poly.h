@@ -72,15 +72,15 @@ public:
 
     polynomial &operator+(const polynomial &other) const;
 
-    polynomial &operator+(const int other) const;
+    polynomial &operator+(int other) const;
 
-    friend polynomial operator+(const int left, const polynomial &right) const;
+    friend polynomial operator+(int left, const polynomial &right) const;
 
     polynomial &operator*(const polynomial &other) const;
 
-    polynomial &operator*(const int other) const;
+    polynomial &operator*(int other) const;
 
-    friend polynomial operator*(const int left, const polynomial &right) const;
+    friend polynomial operator*(int left, const polynomial &right) const;
 
     polynomial &operator%(const polynomial &other) const;
 
