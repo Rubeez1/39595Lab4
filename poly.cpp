@@ -77,7 +77,7 @@ polynomial operator+(int left, const polynomial &right) {
     polynomial* newpoly = new polynomial();
     newpoly->coefficients = new std::vector<int>;    
     for (size_t i = 0; i < right.coefficients->size(); i++) {
-        (*newpoly->coefficients)[i] = (*right.coefficients)[i]; 
+        newpoly->coefficients->push_back((*right.coefficients)[i]);
     }
     (*newpoly->coefficients)[0] = left + (*newpoly->coefficients)[0];
     return *newpoly; 
