@@ -2,7 +2,7 @@
 #include <vector>
 
 
-polynomial::polynomial() {
+polynomial::polynomial() const {
     coefficients = new std::vector<int>;
 }
 
@@ -12,7 +12,7 @@ polynomial::~polynomial() {
     delete coefficients; 
 }
 
-polynomial::polynomial(const polynomial &other) {
+polynomial::polynomial(const polynomial &other) const {
     coefficients = new std::vector<int>(*other.coefficients);
 }
 
@@ -20,7 +20,7 @@ size_t polynomial::find_degree_of() const {
     return coefficients->size();
 }
 
-void polynomial::print() const {
+void polynomial::print() {
     //dummy function
 }
 
@@ -32,7 +32,7 @@ std::vector<std::pair<power, coeff>> polynomial::canonical_form() const {
     return canonical;
 }
 
-polynomial& polynomial::operator=(const polynomial &other) {
+polynomial& polynomial::operator=(const polynomial &other) const {
     coefficients = new std::vector<int>(*other.coefficients); 
     return *this;
 }
@@ -51,7 +51,7 @@ polynomial& polynomial::operator+(const polynomial &other) const {
     return *newpoly;
 }
 
-polynomial& polynomial::operator+(int other) {
+polynomial& polynomial::operator+(int other) const {
     polynomial* newpoly = new polynomial();
     newpoly->coefficients = new std::vector<int>(*coefficients);
     (*newpoly->coefficients)[0] += other;
@@ -79,7 +79,7 @@ polynomial& polynomial::operator*(const polynomial &other) const {
     return *newpoly; 
 }
 
-polynomial& polynomial::operator*(int other) {
+polynomial& polynomial::operator*(int other) const {
     polynomial* newpoly = new polynomial();
     newpoly->coefficients = new std::vector<int>;
     for (size_t i = 0; i < coefficients->size(); i++) {
@@ -88,7 +88,7 @@ polynomial& polynomial::operator*(int other) {
     return *newpoly; 
 }
 
-polynomial operator*(int left, const polynomial &right) {
+polynomial operator*(int left, const polynomial &right) const {
     polynomial* newpoly = new polynomial();
     newpoly->coefficients = new std::vector<int>;    
     for (size_t i = 0; i < right.coefficients->size(); i++) {
@@ -97,7 +97,7 @@ polynomial operator*(int left, const polynomial &right) {
     return *newpoly; 
 }
 
-polynomial& polynomial::operator%(const polynomial& other) {
+polynomial& polynomial::operator%(const polynomial& other) const {
     polynomial* remainder = new polynomial(*this);
 
     while (remainder->find_degree_of() >= other.find_degree_of()) {
