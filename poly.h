@@ -68,21 +68,21 @@ public:
      * @return
      * A reference to the copied polynomial
      */
-    polynomial &operator=(const polynomial &other) const;
+    polynomial &operator=(const polynomial &other);
 
-    polynomial &operator+(const polynomial &other) const;
+    polynomial &operator+(const polynomial &other);
 
-    polynomial &operator+(int other) const;
+    polynomial &operator+(int other);
 
-    friend polynomial operator+(int left, const polynomial &right) const;
+    friend polynomial operator+(int left, const polynomial &right);
 
-    polynomial &operator*(const polynomial &other) const;
+    polynomial &operator*(const polynomial &other);
 
-    polynomial &operator*(int other) const;
+    polynomial &operator*(int other);
 
-    friend polynomial operator*(int left, const polynomial &right) const;
+    friend polynomial operator*(int left, const polynomial &right);
 
-    polynomial &operator%(const polynomial &other) const;
+    polynomial &operator%(const polynomial &other);
 
 
     /**
