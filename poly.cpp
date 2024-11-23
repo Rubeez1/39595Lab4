@@ -103,7 +103,7 @@ polynomial& polynomial::operator*(int other) const {
     polynomial* newpoly = new polynomial();
     newpoly->coefficients = new std::vector<int>;
     for (size_t i = 0; i < coefficients->size(); i++) {
-        (*newpoly->coefficients)[i] = (*coefficients)[i] * other; 
+        newpoly->coefficients->push_back((*other.coefficients)[i] * other);
     }
     return *newpoly; 
 }
@@ -112,7 +112,7 @@ polynomial operator*(int left, const polynomial &right){
     polynomial* newpoly = new polynomial();
     newpoly->coefficients = new std::vector<int>;    
     for (size_t i = 0; i < right.coefficients->size(); i++) {
-        (*newpoly->coefficients)[i] = (*right.coefficients)[i] * left; 
+        newpoly->coefficients->push_back((*right.coefficients)[i] * left);
     }
     return *newpoly; 
 }
