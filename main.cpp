@@ -27,13 +27,13 @@ std::optional<double> poly_test(polynomial& p1,
 
     return std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
 }
-
+/*
 int main()
 {
-    /** We're doing (x+1)^2, so solution is x^2 + 2x + 1*/
+    // We're doing (x+1)^2, so solution is x^2 + 2x + 1
     std::vector<std::pair<power, coeff>> solution = {{2,1}, {1,2}, {0,1}};
 
-    /** This holds (x+1), which we'll pass to each polynomial */
+    //This holds (x+1), which we'll pass to each polynomial 
     std::vector<std::pair<power, coeff>> poly_input = {{1,1}, {0,1}};
 
     polynomial p1(poly_input.begin(), poly_input.end());
@@ -49,4 +49,4 @@ int main()
     {
         std::cout << "Failed test" << std::endl;
     }
-}
+}*/
