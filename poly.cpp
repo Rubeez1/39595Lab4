@@ -107,6 +107,12 @@ polynomial& polynomial::operator*(const polynomial &other) const {
         std::advance(this_result, (max_power1 + max_power2 - 1 - i));
         threads[i] = std::thread(mult_poly,*this, other, i, this_result);
     }
+
+    for(int i = 0; i < max_power1 + max_power2; i += 1){
+        threads[i].join();
+    }
+
+    delete []threads;
     // for (size_t i = 0; i < max_power1; i++) {
     //     for (size_t j = 0; j < max_power2; j++) {
     //         (*newpoly->coefficients)[i + j] += (*coefficients)[i] * (*other.coefficients)[j];  // Add the product
