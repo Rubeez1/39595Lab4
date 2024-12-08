@@ -84,7 +84,7 @@ polynomial operator+(int left, const polynomial &right) {
     return *newpoly; 
 }
 
-void mult_poly(const polynomial & p1, const polynomial &p2, size_t deg, std::vector<int>::iterator result){
+void mult_poly(const polynomial & p1, const polynomial &p2, size_t deg, int * result){
     *result = 0; 
     for(size_t dg = 0; dg < deg; dg += 1){
         if(dg < p1.coefficients->size() && (deg - dg) < p2.coefficients->size()){
@@ -101,23 +101,38 @@ polynomial& polynomial::operator*(const polynomial &other) const {
     newpoly->coefficients->resize(max_power1 + max_power2 - 1, 0);  
 
     std::thread * threads = new std::thread[max_power1 + max_power2 - 1];
-    
+    int ** saves = new int*[max_power1 + max_power2 - 1]; 
     for(size_t i = 0; i <  max_power1 + max_power2; i += 1){
-        std::vector<int>::iterator this_result = newpoly->coefficients->begin();
-        std::advance(this_result, (max_power1 + max_power2 - 1 - i));
-        threads[i] = std::thread(mult_poly,*this, other, i, this_result);
+        saves[i] = new int[1];
+        saves[i][0] = 0;
+        threads[i] = std::thread(mult_poly,*this, other, i, saves[i]);
     }
 
     for(size_t i = 0; i <  max_power1 + max_power2; i += 1){
         threads[i].join();
     }
 
+    for(size_t i = 0; i <  max_power1 + max_power2; i += 1){
+        (*newpoly->coefficients)[i] = saves[i][0];
+        int * sv = saves[i];
+        delete []sv;
+    }
+
+    delete []saves;
     delete []threads;
+
+    // polynomial* newpoly2 = new polynomial();
+
     // for (size_t i = 0; i < max_power1; i++) {
     //     for (size_t j = 0; j < max_power2; j++) {
-    //         (*newpoly->coefficients)[i + j] += (*coefficients)[i] * (*other.coefficients)[j];  // Add the product
+    //         (*newpoly2->coefficients)[i + j] += (*coefficients)[i] * (*other.coefficients)[j];  // Add the product
     //     }
     // }
+
+    // for(size_t i = 0; i <  max_power1 + max_power2; i += 1){
+    //     std::cout<<"IDx: " << i << "Mine: " << (*newpoly->coefficients)[i] << "Correct: " << (*newpoly2->coefficients)[i] << std::endl;
+    // }
+
 
     return *newpoly;
 }

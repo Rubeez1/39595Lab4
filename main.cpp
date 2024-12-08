@@ -54,7 +54,7 @@ void modulo_test() {
     polynomial p2(poly_input2.begin(), poly_input2.end());  
     polynomial p3 = p1 % p2;
 }
-/*
+
 int main()
 {
     
@@ -81,4 +81,4 @@ int main()
     {
         std::cout << "Failed test" << std::endl;
     }
-}*/
+}
