@@ -86,9 +86,9 @@ polynomial operator+(int left, const polynomial &right) {
 
 void mult_poly(const polynomial & p1, const polynomial &p2, size_t deg, int * result){
     *result = 0; 
-    for(size_t dg = 0; dg < deg; dg += 1){
+    for(size_t dg = 0; dg <= deg; dg += 1){
         if(dg < p1.coefficients->size() && (deg - dg) < p2.coefficients->size()){
-            *result += (*p1.coefficients)[dg] * (*p2.coefficients)[dg];
+            *result += (*p1.coefficients)[dg] * (*p2.coefficients)[deg - dg];
         }
     }
 }
