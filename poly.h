@@ -2,6 +2,7 @@
 #define POLY_H
 
 #include <vector>
+#include <map>
 #include <utility>
 #include <cstddef>
 
@@ -31,16 +32,10 @@ public:
      */
     template <typename Iter>
     polynomial(Iter begin, Iter end) {
-        coefficients = new std::vector<int>();
         for (Iter it = begin; it != end; ++it) {
-            power p = it->first;  
-            coeff c = it->second; 
-
-            if (p >= coefficients->size()) {
-                coefficients->resize(p + 1,0);
-            }
-            
-            (*coefficients)[p] = (*coefficients)[p] + c;
+            power p = it->first; 
+            coeff c = it->second;
+            coefficients[p] += c; 
         }
     }
 
@@ -135,7 +130,7 @@ public:
      */
     std::vector<std::pair<power, coeff>> canonical_form() const;
 
-    std::vector<int>* coefficients;
+    std::map<int, int> coefficients;
 private:
     
 };
