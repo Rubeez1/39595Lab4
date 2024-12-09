@@ -114,11 +114,11 @@ polynomial& polynomial::operator*(const polynomial &other) const {
 
     for(size_t i = 0; i <  max_power1 + max_power2; i += 1){
         (*newpoly->coefficients)[i] = saves[i][0];
-        int * sv = saves[i];
-        delete []sv;
+        //int * sv = saves[i];
+        //delete []sv;
     }
 
-    delete []saves;
+    //delete []saves;
     delete []threads;
 
     // polynomial* newpoly2 = new polynomial();
