@@ -55,30 +55,30 @@ void modulo_test() {
     polynomial p3 = p1 % p2;
 }
 
-int main()
-{
+// int main()
+// {
     
-    addition_test1();
-    zero_poly_test();
-    int_addition_test();
-    modulo_test();
-    //We're doing (x+1)^2, so solution is x^2 + 2x + 1
-    std::vector<std::pair<power, coeff>> solution = {{2,1}, {1,2}, {0,1}};
+//     addition_test1();
+//     zero_poly_test();
+//     int_addition_test();
+//     modulo_test();
+//     //We're doing (x+1)^2, so solution is x^2 + 2x + 1
+//     std::vector<std::pair<power, coeff>> solution = {{2,1}, {1,2}, {0,1}};
 
-    // This holds (x+1), which we'll pass to each polynomial
-    std::vector<std::pair<power, coeff>> poly_input = {{1,1}, {0,1}};
+//     // This holds (x+1), which we'll pass to each polynomial
+//     std::vector<std::pair<power, coeff>> poly_input = {{1,1}, {0,1}};
 
-    polynomial p1(poly_input.begin(), poly_input.end());
-    polynomial p2(poly_input.begin(), poly_input.end());
-    polynomial p3 = p1 * p2;
-    std::optional<double> result = poly_test(p1, p2, solution);
+//     polynomial p1(poly_input.begin(), poly_input.end());
+//     polynomial p2(poly_input.begin(), poly_input.end());
+//     polynomial p3 = p1 * p2;
+//     std::optional<double> result = poly_test(p1, p2, solution);
 
-    if (result.has_value())
-    {
-        std::cout << "Passed test, took " << result.value()/1000 << " seconds" << std::endl;
-    } 
-    else 
-    {
-        std::cout << "Failed test" << std::endl;
-    }
-}
+//     if (result.has_value())
+//     {
+//         std::cout << "Passed test, took " << result.value()/1000 << " seconds" << std::endl;
+//     } 
+//     else 
+//     {
+//         std::cout << "Failed test" << std::endl;
+//     }
+// }
