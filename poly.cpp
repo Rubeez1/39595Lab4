@@ -24,12 +24,9 @@ size_t polynomial::find_degree_of() const {
     return coefficients.rbegin()->first;
 }
 
-// void polynomial::print() {
-//     for (int i = coefficients->size(); i < 0 ; i--) {
-//        std::cout << (*coefficients)[i].last << "x^" << (*coefficients)[i].first << std::endl;
-//     }
-    
-// }
+void polynomial::print() {
+
+}
 
 std::vector<std::pair<power, coeff>> polynomial::canonical_form() const {
     std::vector<std::pair<power, coeff>> canonical;
