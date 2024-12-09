@@ -24,9 +24,12 @@ size_t polynomial::find_degree_of() const {
     return coefficients.rbegin()->first;
 }
 
-void polynomial::print() {
-   
- }
+// void polynomial::print() {
+//     for (int i = coefficients->size(); i < 0 ; i--) {
+//        std::cout << (*coefficients)[i].last << "x^" << (*coefficients)[i].first << std::endl;
+//     }
+    
+// }
 
 std::vector<std::pair<power, coeff>> polynomial::canonical_form() const {
     std::vector<std::pair<power, coeff>> canonical;
@@ -118,19 +121,22 @@ polynomial operator*(int left, const polynomial &right){
 }
 
 polynomial& polynomial::operator%(const polynomial& other) const {
-    polynomial* remainder = new polynomial(*this);  
+    polynomial* remainder = new polynomial(*this);
 
     while (!remainder->coefficients.empty() && remainder->find_degree_of() >= other.find_degree_of()) {
-
         int degree_diff = remainder->find_degree_of() - other.find_degree_of();
         int leading_coeff_remainder = remainder->coefficients[remainder->find_degree_of()];
+        
         int leading_coeff_other = 0;
         auto it = other.coefficients.find(other.find_degree_of());
         if (it != other.coefficients.end()) {
-                leading_coeff_other = it->second;
+            leading_coeff_other = it->second;
+        }
+
+        if (leading_coeff_other == 0) {
+            break;
         }
         int c_quot = leading_coeff_remainder / leading_coeff_other;
-
         for (const auto& term : other.coefficients) {
             int power = term.first;
             coeff coeff_other = term.second;
@@ -141,14 +147,15 @@ polynomial& polynomial::operator%(const polynomial& other) const {
                 remainder->coefficients.erase(new_power);
             }
         }
-
-        while (!remainder->coefficients.empty() && remainder->coefficients.count(remainder->find_degree_of()) == 0) {
-            remainder->coefficients.erase(remainder->find_degree_of());
+        auto highest_degree = remainder->find_degree_of();
+        while (!remainder->coefficients.empty() && remainder->coefficients.count(highest_degree) == 0) {
+            remainder->coefficients.erase(highest_degree);
+            highest_degree = remainder->find_degree_of(); 
         }
-
         if (remainder->coefficients.empty()) {
             break;
         }
     }
+
     return *remainder;
 }
