@@ -116,12 +116,13 @@ polynomial& polynomial::operator*(const polynomial &other) const {
 
 
         threads.emplace_back(poly_mult, std::cref(other), power1, coeff1, std::ref(polys));
+        threads.back().join();
     }
 
 
-    for (auto &thread : threads) {
-        thread.join();
-    }
+    // for (auto &thread : threads) {
+    //     thread.join();
+    // }
 
     polynomial* newpoly = new polynomial();
     for (auto* ply : polys) {
