@@ -184,6 +184,7 @@ polynomial& polynomial::operator%(const polynomial& other) const {
             highest_degree = remainder->find_degree_of();
         }
         if (remainder->coefficients.empty()) {
+            remainder->coefficients[0]=0;
             break;
         }
     }
