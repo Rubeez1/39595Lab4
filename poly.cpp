@@ -153,28 +153,24 @@ polynomial operator*(int left, const polynomial &right) {
 }
 
 polynomial& polynomial::operator%(const polynomial& other) const {
+
     polynomial* remainder = new polynomial(*this);
     while (!remainder->coefficients.empty() && remainder->find_degree_of() >= other.find_degree_of()) {
         int degree_diff = remainder->find_degree_of() - other.find_degree_of();
         int leading_coeff_remainder = remainder->coefficients[remainder->find_degree_of()];
-        
-        int leading_coeff_other = 0;
-        auto it = other.coefficients.find(other.find_degree_of());
-        if (it != other.coefficients.end()) {
-            leading_coeff_other = it->second;
-        }
+        int leading_coeff_other = other.coefficients.at(other.find_degree_of()); 
 
         if (leading_coeff_other == 0) {
-            break;
+            break; 
         }
 
         int c_quot = leading_coeff_remainder / leading_coeff_other;
 
-
         for (const auto& term : other.coefficients) {
             int power = term.first;
             coeff coeff_other = term.second;
-            int new_power = power + degree_diff;
+            int new_power = power + degree_diff;  
+
             remainder->coefficients[new_power] -= c_quot * coeff_other;
 
             if (remainder->coefficients[new_power] == 0) {
@@ -182,21 +178,21 @@ polynomial& polynomial::operator%(const polynomial& other) const {
             }
         }
         auto highest_degree = remainder->find_degree_of();
-
-        auto it_highest = remainder->coefficients.find(highest_degree);
-        while (it_highest != remainder->coefficients.end() && remainder->coefficients[highest_degree] == 0) {
-            remainder->coefficients.erase(it_highest);
+        while (remainder->coefficients.find(highest_degree) != remainder->coefficients.end() &&
+               remainder->coefficients[highest_degree] == 0) {
+            remainder->coefficients.erase(highest_degree);
             highest_degree = remainder->find_degree_of();
-            it_highest = remainder->coefficients.find(highest_degree);
         }
-
         if (remainder->coefficients.empty()) {
             break;
         }
     }
-    for (auto it = remainder->coefficients.rbegin(); it != remainder->coefficients.rend(); ++it) {
+
+    for (auto it = remainder->coefficients.begin(); it != remainder->coefficients.end();) {
         if (it->second == 0) {
-            remainder->coefficients.erase(std::next(it).base());
+            it = remainder->coefficients.erase(it);  
+        } else {
+            ++it;
         }
     }
 
