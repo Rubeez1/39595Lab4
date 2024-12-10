@@ -24,7 +24,13 @@ size_t polynomial::find_degree_of() const {
     if (coefficients.empty()) {
         return 0;  
     }
-    return coefficients.rbegin()->first;
+
+    for (auto it = coefficients.rbegin(); it != coefficients.rend(); ++it) {
+        if (it->second != 0) {
+            return it->first;
+        }
+    }
+    return 0;
 }
 
 void polynomial::print() {
@@ -148,7 +154,9 @@ polynomial operator*(int left, const polynomial &right) {
 
 polynomial& polynomial::operator%(const polynomial& other) const {
     polynomial* remainder = new polynomial(*this);
-    while (!remainder->coefficients.empty() && remainder->find_degree_of() >= other.find_degree_of()) {
+
+
+    while (remainder->find_degree_of() >= other.find_degree_of()) {
         int degree_diff = remainder->find_degree_of() - other.find_degree_of();
         int leading_coeff_remainder = remainder->coefficients[remainder->find_degree_of()];
         
@@ -161,7 +169,6 @@ polynomial& polynomial::operator%(const polynomial& other) const {
         if (leading_coeff_other == 0) {
             break;
         }
-
         int c_quot = leading_coeff_remainder / leading_coeff_other;
 
 
@@ -175,13 +182,11 @@ polynomial& polynomial::operator%(const polynomial& other) const {
                 remainder->coefficients.erase(new_power);
             }
         }
-        auto highest_degree = remainder->find_degree_of();
 
-        auto it_highest = remainder->coefficients.find(highest_degree);
-        while (it_highest != remainder->coefficients.end() && remainder->coefficients[highest_degree] == 0) {
-            remainder->coefficients.erase(it_highest);
-            highest_degree = remainder->find_degree_of();
-            it_highest = remainder->coefficients.find(highest_degree);
+        auto highest_degree = remainder->find_degree_of();
+        while (highest_degree >= 0 && remainder->coefficients[highest_degree] == 0) {
+            remainder->coefficients.erase(highest_degree);
+            highest_degree = remainder->find_degree_of();  
         }
 
         if (remainder->coefficients.empty()) {
