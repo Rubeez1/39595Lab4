@@ -138,6 +138,8 @@ polynomial& polynomial::operator%(const polynomial& other) const {
         }
 
         int c_quot = leading_coeff_remainder / leading_coeff_other;
+
+
         for (const auto& term : other.coefficients) {
             int power = term.first;
             coeff coeff_other = term.second;
@@ -148,13 +150,15 @@ polynomial& polynomial::operator%(const polynomial& other) const {
                 remainder->coefficients.erase(new_power);
             }
         }
-
         auto highest_degree = remainder->find_degree_of();
-        
-        while (!remainder->coefficients.empty() && remainder->coefficients.find(highest_degree) == remainder->coefficients.end()) {
-            remainder->coefficients.erase(highest_degree); 
-            highest_degree = remainder->find_degree_of();  
+
+        auto it_highest = remainder->coefficients.find(highest_degree);
+        while (it_highest != remainder->coefficients.end() && remainder->coefficients[highest_degree] == 0) {
+            remainder->coefficients.erase(it_highest);
+            highest_degree = remainder->find_degree_of();
+            it_highest = remainder->coefficients.find(highest_degree);
         }
+
         if (remainder->coefficients.empty()) {
             break;
         }
