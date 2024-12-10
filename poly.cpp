@@ -84,19 +84,19 @@ polynomial operator+(int left, const polynomial &right) {
 
 polynomial& polynomial::operator*(const polynomial &other) const {
     polynomial* newpoly = new polynomial();
-    // newpoly->coefficients = std::map<int, int>();
-    // for (const auto& p1 : coefficients) {
-    //     int power1 = p1.first;
-    //     coeff coeff1 = p1.second;
+    newpoly->coefficients = std::map<int, int>();
+    for (const auto& p1 : coefficients) {
+        int power1 = p1.first;
+        coeff coeff1 = p1.second;
         
-    //     for (const auto& p2 : other.coefficients) {
-    //         int power2 = p2.first;
-    //         coeff coeff2 = p2.second;
-    //         int new_power = power1 + power2;
-    //         coeff new_coeff = coeff1 * coeff2;
-    //         newpoly->coefficients[new_power] += new_coeff;
-    //     }
-    // }
+        for (const auto& p2 : other.coefficients) {
+            int power2 = p2.first;
+            coeff coeff2 = p2.second;
+            int new_power = power1 + power2;
+            coeff new_coeff = coeff1 * coeff2;
+            newpoly->coefficients[new_power] += new_coeff;
+        }
+    }
 
     return *newpoly;
 }
