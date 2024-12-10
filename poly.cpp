@@ -82,49 +82,46 @@ polynomial operator+(int left, const polynomial &right) {
     return *newpoly; 
 }
 
-void poly_mult(const polynomial & p2, int power, coeff coeff, std::vector<polynomial*> polys){
-    polynomial * newpoly = new polynomial();
-    for(auto it2 = p2.coefficients.rbegin(); it2 !=p2.coefficients.rend(); ++it2){
+void poly_mult(const polynomial &p2, int power, coeff coeff, std::vector<polynomial*>& polys) {
+    polynomial* newpoly = new polynomial(); 
+    for (auto it2 = p2.coefficients.rbegin(); it2 != p2.coefficients.rend(); ++it2) {
         int power2 = it2->first;
-        coeff coeff2 = it2->second;
+        int coeff2 = it2->second;
         if (coeff2 == 0) continue;
         int new_power = power + power2;
-        coeff new_coeff = coeff * coeff2;
+        int new_coeff = coeff * coeff2;
         newpoly->coefficients[new_power] += new_coeff;
     }
-    polys.push_back(newpoly);
+    polys.push_back(newpoly); 
 }
 
 polynomial& polynomial::operator*(const polynomial &other) const {
     if (coefficients.empty() || other.coefficients.empty()) {
-        return *new polynomial(); 
-    }
-    std::vector<std::thread> threads;
-    std::vector<polynomial*> polys;
-    polynomial* newpoly = new polynomial();
-    for (auto it = coefficients.rbegin(); it != coefficients.rend(); ++it) {
-        int power1 = it->first;
-        coeff coeff1 = it->second;
-        if (coeff1 == 0) continue;
-        threads.emplace_back(poly_mult, power1, coeff1, polys);
-        // for (auto it2 = other.coefficients.rbegin(); it2 != other.coefficients.rend(); ++it2) {
-        //     int power2 = it2->first;
-        //     coeff coeff2 = it2->second;
-        //     if (coeff2 == 0) continue;
-        //     int new_power = power1 + power2;
-        //     coeff new_coeff = coeff1 * coeff2;
-        //     newpoly->coefficients[new_power] += new_coeff;
-        // }
+        return *new polynomial();
     }
 
-    for(auto & thread : threads){
+    std::vector<std::thread> threads;
+    std::vector<polynomial*> polys;
+
+    for (auto it = coefficients.rbegin(); it != coefficients.rend(); ++it) {
+        int power1 = it->first;
+        int coeff1 = it->second;
+        if (coeff1 == 0) continue;
+
+
+        threads.emplace_back(poly_mult, std::cref(other), power1, coeff1, std::ref(polys));
+    }
+
+
+    for (auto &thread : threads) {
         thread.join();
     }
 
-    for(auto * ply: polys){
+    polynomial* newpoly = new polynomial();
+    for (auto* ply : polys) {
         *newpoly = *newpoly + *ply;
+        delete ply; 
     }
-
 
     return *newpoly;
 }
