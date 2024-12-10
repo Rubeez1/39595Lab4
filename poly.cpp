@@ -84,19 +84,19 @@ polynomial operator+(int left, const polynomial &right) {
 
 polynomial& polynomial::operator*(const polynomial &other) const {
     polynomial* newpoly = new polynomial();
-    newpoly->coefficients = std::map<int, int>();
-    for (const auto& p1 : coefficients) {
-        int power1 = p1.first;
-        coeff coeff1 = p1.second;
+    // newpoly->coefficients = std::map<int, int>();
+    // for (const auto& p1 : coefficients) {
+    //     int power1 = p1.first;
+    //     coeff coeff1 = p1.second;
         
-        for (const auto& p2 : other.coefficients) {
-            int power2 = p2.first;
-            coeff coeff2 = p2.second;
-            int new_power = power1 + power2;
-            coeff new_coeff = coeff1 * coeff2;
-            newpoly->coefficients[new_power] += new_coeff;
-        }
-    }
+    //     for (const auto& p2 : other.coefficients) {
+    //         int power2 = p2.first;
+    //         coeff coeff2 = p2.second;
+    //         int new_power = power1 + power2;
+    //         coeff new_coeff = coeff1 * coeff2;
+    //         newpoly->coefficients[new_power] += new_coeff;
+    //     }
+    // }
 
     return *newpoly;
 }
@@ -104,25 +104,24 @@ polynomial& polynomial::operator*(const polynomial &other) const {
 
 polynomial& polynomial::operator*(int other) const {
     polynomial* newpoly = new polynomial();
-    newpoly->coefficients = coefficients;
-    for (auto it = newpoly->coefficients.rbegin(); it != newpoly->coefficients.rend(); ++it) {
-        newpoly->coefficients[it->first] = newpoly->coefficients[it->first] * other;
-    }
+    // newpoly->coefficients = coefficients;
+    // for (auto it = newpoly->coefficients.rbegin(); it != newpoly->coefficients.rend(); ++it) {
+    //     newpoly->coefficients[it->first] = newpoly->coefficients[it->first] * other;
+    // }
     return *newpoly; 
 }
 
 polynomial operator*(int left, const polynomial &right){
     polynomial* newpoly = new polynomial();
-    newpoly->coefficients = right.coefficients;
-    for (auto it = newpoly->coefficients.rbegin(); it != newpoly->coefficients.rend(); ++it) {
-        newpoly->coefficients[it->first] = newpoly->coefficients[it->second] * left;
-    }
+    // newpoly->coefficients = right.coefficients;
+    // for (auto it = newpoly->coefficients.rbegin(); it != newpoly->coefficients.rend(); ++it) {
+    //     newpoly->coefficients[it->first] = newpoly->coefficients[it->second] * left;
+    // }
     return *newpoly; 
 }
 
 polynomial& polynomial::operator%(const polynomial& other) const {
     polynomial* remainder = new polynomial(*this);
-    /*
     int loop_test = 0;
     while (!remainder->coefficients.empty() && remainder->find_degree_of() >= other.find_degree_of() && (loop_test++ < 9999)) {
         int degree_diff = remainder->find_degree_of() - other.find_degree_of();
@@ -164,6 +163,6 @@ polynomial& polynomial::operator%(const polynomial& other) const {
             break;
         }
     }
-*/
+
     return *remainder;
 }
