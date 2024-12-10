@@ -64,9 +64,9 @@ void modulo_test() {
 // int main()
 // {
     
-//     // addition_test1();
-//     // zero_poly_test();
-//     // int_addition_test();
+//     addition_test1();
+//     zero_poly_test();
+//     int_addition_test();
 //     modulo_test();
 //     //We're doing (x+1)^2, so solution is x^2 + 2x + 1
 //     std::vector<std::pair<power, coeff>> solution = {{0,0}};
