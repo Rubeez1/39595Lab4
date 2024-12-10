@@ -116,9 +116,9 @@ polynomial& polynomial::operator*(const polynomial &other) const {
         if (coeff1 == 0) continue;
 
 
-        // threads.emplace_back(poly_mult, std::cref(other), power1, coeff1, std::ref(polys));
-        // threads.back().join();
-        poly_mult(std::cref(other), power1, coeff1, std::ref(polys));
+        threads.emplace_back(poly_mult, std::cref(other), power1, coeff1, std::ref(polys));
+        threads.back().join();
+
     }
 
 
