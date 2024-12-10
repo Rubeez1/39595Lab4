@@ -188,14 +188,6 @@ polynomial& polynomial::operator%(const polynomial& other) const {
             break;
         }
     }
-
-    for (auto it = remainder->coefficients.begin(); it != remainder->coefficients.end();) {
-        if (it->second == 0) {
-            it = remainder->coefficients.erase(it);  
-        } else {
-            ++it;
-        }
-    }
-
+    
     return *remainder;
 }
