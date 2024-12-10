@@ -123,7 +123,7 @@ polynomial operator*(int left, const polynomial &right){
 polynomial& polynomial::operator%(const polynomial& other) const {
     polynomial* remainder = new polynomial(*this);
 
-    while (!remainder->coefficients.empty() && remainder->find_degree_of() >= other.find_degree_of()) {
+    while (!remainder->coefficients.empty() && (remainder->find_degree_of() >= other.find_degree_of())) {
         int degree_diff = remainder->find_degree_of() - other.find_degree_of();
         int leading_coeff_remainder = remainder->coefficients[remainder->find_degree_of()];
         
@@ -148,7 +148,7 @@ polynomial& polynomial::operator%(const polynomial& other) const {
             }
         }
         auto highest_degree = remainder->find_degree_of();
-        while (!remainder->coefficients.empty() && remainder->coefficients.count(highest_degree) == 0) {
+        while (!remainder->coefficients.empty() && (remainder->coefficients.count(highest_degree) == 0)) {
             remainder->coefficients.erase(highest_degree);
             highest_degree = remainder->find_degree_of(); 
         }
