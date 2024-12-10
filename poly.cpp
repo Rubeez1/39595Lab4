@@ -122,8 +122,8 @@ polynomial operator*(int left, const polynomial &right){
 
 polynomial& polynomial::operator%(const polynomial& other) const {
     polynomial* remainder = new polynomial(*this);
-
-    while (!remainder->coefficients.empty() && remainder->find_degree_of() >= other.find_degree_of()) {
+    int loop_test = 0;
+    while (!remainder->coefficients.empty() && remainder->find_degree_of() >= other.find_degree_of() && (loop_test++ < 9999)) {
         int degree_diff = remainder->find_degree_of() - other.find_degree_of();
         int leading_coeff_remainder = remainder->coefficients[remainder->find_degree_of()];
         
