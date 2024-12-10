@@ -194,6 +194,11 @@ polynomial& polynomial::operator%(const polynomial& other) const {
             break;
         }
     }
+    for (auto it = remainder->coefficients.rbegin(); it != remainder->coefficients.rend(); ++it) {
+        if (it->second == 0) {
+            remainder->coefficients.erase(std::next(it).base());
+        }
+    }
 
     return *remainder;
 }
