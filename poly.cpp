@@ -87,13 +87,13 @@ polynomial& polynomial::operator*(const polynomial &other) const {
         return *new polynomial(); 
     }
     polynomial* newpoly = new polynomial();
-    for (const auto& p1 : coefficients) {
-        int power1 = p1.first;
-        coeff coeff1 = p1.second;
+    for (auto it = coefficients.rbegin(); it != coefficients.rend(); ++it) {
+        int power1 = it->first;
+        coeff coeff1 = it->second;
         if (coeff1 == 0) continue;
-        for (const auto& p2 : other.coefficients) {
-            int power2 = p2.first;
-            coeff coeff2 = p2.second;
+        for (auto it2 = other.coefficients.rbegin(); it2 != other.coefficients.rend(); ++it2) {
+            int power2 = it2->first;
+            coeff coeff2 = it2->second;
             if (coeff2 == 0) continue;
             int new_power = power1 + power2;
             coeff new_coeff = coeff1 * coeff2;
