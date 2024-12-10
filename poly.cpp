@@ -109,14 +109,21 @@ polynomial& polynomial::operator*(const polynomial &other) const {
     std::vector<std::thread> threads;
     std::vector<polynomial*> polys;
 
+    int thrd_count = 0;
+
     for (auto it = coefficients.rbegin(); it != coefficients.rend(); ++it) {
         int power1 = it->first;
         int coeff1 = it->second;
         if (coeff1 == 0) continue;
 
-
-        threads.emplace_back(poly_mult, std::cref(other), power1, coeff1, std::ref(polys));
-        threads.back().join();
+        if(thrd_count++ > 12){
+            threads.emplace_back(poly_mult, std::cref(other), power1, coeff1, std::ref(polys));
+            threads.back().join();
+        }
+        else{
+            poly_mult( std::cref(other), power1, coeff1, std::ref(polys));
+        }
+       
     }
 
 
