@@ -136,13 +136,14 @@ polynomial& polynomial::operator*(int other) const {
     return *newpoly; 
 }
 
-polynomial operator*(int left, const polynomial &right){
-    polynomial* newpoly = new polynomial();
-    newpoly->coefficients = right.coefficients;
-    for (auto it = newpoly->coefficients.rbegin(); it != newpoly->coefficients.rend(); ++it) {
-        newpoly->coefficients[it->first] = newpoly->coefficients[it->second] * left;
+polynomial operator*(int left, const polynomial &right) {
+    polynomial newpoly;  
+    newpoly.coefficients = right.coefficients;  
+
+    for (auto it = newpoly.coefficients.rbegin(); it != newpoly.coefficients.rend(); ++it) {
+        newpoly.coefficients[it->first] = it->second * left;  
     }
-    return *newpoly; 
+    return newpoly;  
 }
 
 polynomial& polynomial::operator%(const polynomial& other) const {
