@@ -21,6 +21,9 @@ polynomial::polynomial(const polynomial &other) {
 }
 
 size_t polynomial::find_degree_of() const {
+    if (coefficients.empty()) {
+        return 0;  
+    }
     return coefficients.rbegin()->first;
 }
 
